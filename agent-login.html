@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agent Login</title>
+  <style>
+    /* General Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #0078d7, #00294d);
+  color: #fff;
+}
+
+/* Login Container */
+.login-container {
+  background: #ffffff;
+  color: #333;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.login-container h1 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+/* Input Group */
+.input-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: #0078d7;
+  box-shadow: 0 0 5px rgba(0, 120, 215, 0.5);
+}
+
+/* Button */
+.btn {
+  background-color: #0078d7;
+  color: white;
+  border: none;
+  padding: 0.8rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #005bb5;
+}
+
+/* Forgot Password */
+.forgot-password {
+  margin-top: 1rem;
+}
+
+.forgot-password a {
+  color: #0078d7;
+  text-decoration: none;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+/* Form Container */
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Links */
+a {
+  color: #0078d7;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>Agent Login</h1>
+
+    <!-- Login Form -->
+    <div id="login-form" class="form-container">
+      <form id="login" action="/login" method="post">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="login-username" name="username" placeholder="Enter your username" required>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="login-password" name="password" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="btn">Login</button>
+        <p class="forgot-password"><a href="/reset-password">Forgot Password?</a></p>
+        <p>Don't have an account? <a href="#" onclick="toggleForm()">Create Account</a></p>
+      </form>
+    </div>
+
+    <!-- Create Account Form -->
+    <div id="create-account-form" class="form-container" style="display: none;">
+      <form id="create-account" action="/create-account" method="post">
+        <div class="input-group">
+          <label for="username">Username</label>
+          <input type="text" id="new-username" name="username" placeholder="Choose a username" required>
+        </div>
+        <div class="input-group">
+          <label for="email">Email</label>
+          <input type="email" id="new-email" name="email" placeholder="Enter your email" required>
+        </div>
+        <div class="input-group">
+          <label for="password">Password</label>
+          <input type="password" id="new-password" name="password" placeholder="Create a password" required>
+        </div>
+        <div class="input-group">
+          <label for="confirm-password">Confirm Password</label>
+          <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+        </div>
+        <button type="submit" class="btn">Create Account</button>
+        <p>Already have an account? <a href="#" onclick="toggleForm()">Login</a></p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Toggle between Login and Create Account forms
+function toggleForm() {
+  const loginForm = document.getElementById("login-form");
+  const createAccountForm = document.getElementById("create-account-form");
+
+  if (loginForm.style.display === "none") {
+    loginForm.style.display = "block";
+    createAccountForm.style.display = "none";
+  } else {
+    loginForm.style.display = "none";
+    createAccountForm.style.display = "block";
+  }
+}
+
+// Basic form validation (optional)
+document.getElementById('create-account').addEventListener('submit', function(event) {
+  const password = document.getElementById('new-password').value;
+  const confirmPassword = document.getElementById('confirm-password').value;
+
+  if (password !== confirmPassword) {
+    event.preventDefault();
+    alert("Passwords do not match!");
+  }
+});
+
+  </script>
+</body>
+</html>

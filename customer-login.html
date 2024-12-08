@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deepika Travels - Booking</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: blueviolet;
+            margin: 0;
+            padding: 0;
+        }
+
+        h2 {
+            text-align: center;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], input[type="number"], input[type="date"], select {
+            font-size: 16px;
+        }
+
+        /* Form Box Styles */
+        #form-box {
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Booking Container Styles */
+        #booking-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hidden Class */
+        .hidden {
+            display: none;
+        }
+
+        /* Link Styles */
+        a {
+            color: #4CAF50;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            #form-box, #booking-container {
+                width: 90%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="form-box">
+        <!-- Login Form -->
+        <form id="login-form">
+            <h2>Login to Deepika Travels</h2>
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p>Don't have an account? <a href="#" id="create-account">Create Account</a></p>
+        </form>
+
+        <!-- Create Account Form (Initially Hidden) -->
+        <form id="create-account-form" class="hidden">
+            <h2>Create Account</h2>
+            <input type="text" id="new-username" placeholder="Username" required>
+            <input type="email" id="new-email" placeholder="Email" required>
+            <input type="password" id="new-password" placeholder="Password" required>
+            <button type="submit">Create Account</button>
+            <p>Already have an account? <a href="#" id="login-link">Login</a></p>
+        </form>
+    </div>
+
+    <!-- Ticket Booking Form (Initially Hidden) -->
+    <div id="booking-container" class="hidden">
+        <h2>Book Your Ticket</h2>
+        <form id="booking-form">
+            <input type="email" id="email" placeholder="Email" required>
+            <select id="destination" required>
+                <option value="">Select Destination</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Bangalore">Bangalore</option>
+                <option value="Chennai">Chennai</option>
+            </select>
+            <input type="date" id="travel-date" required>
+            <input type="number" id="travelers" placeholder="Number of Travelers" required>
+            <button type="submit">Book Ticket</button>
+        </form>
+    </div>
+
+    <script>
+        // Event listener for login form submission
+        document.getElementById("login-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Simple check for username and password
+            if (username && password) {
+                alert("Login successful! Welcome, " + username + ".");
+                
+                // Hide login form and show booking form
+                document.getElementById("form-box").classList.add("hidden");
+                document.getElementById("booking-container").classList.remove("hidden");
+            } else {
+                alert("Please enter both username and password.");
+            }
+        });
+
+        // Event listener for create account link
+        document.getElementById("create-account").addEventListener("click", function(event) {
+            event.preventDefault();
+            document.getElementById("login-form").classList.add("hidden");
+            document.getElementById("create-account-form").classList.remove("hidden");
+        });
+
+        // Event listener for create account form submission
+        document.getElementById("create-account-form").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const newUsername = document.getElementById("new-username").value;
+            const newEmail = document.getElementById("new-email").value;
+            const newPassword = document.getElementById("new-password").value;
+
+            // Check if inputs are filled
+            if (newUsername && newEmail && newPassword) {
+                // Save account details in localStorage (for demonstration purposes)
+                localStorage.setItem("username", newUsername);
+                localStorage.setItem("email", newEmail);
+                localStorage.setItem("password", newPassword);
+
+                alert("Account created successfully!");
+
+                // Automatically log in the user
+                document.getElementById("create-account-form").classList.add("hidden");
+                document.getElementById("form-box").classList.add("hidden");
+                document.getElementById("booking-container").classList.remove("hidden");
+            } else {
+                alert("Please fill in all the fields.");
+            }
+        });
+
+        // Event listener for login link (to go back to login form)
+        document.getElementById("login-link").addEventListener("click", function(event) {
+            event.preventDefault();
+            document.getElementById("create-account-form").classList.add("hidden");
+            document.getElementById("login-form").classList.remove("hidden");
+        });
+
+        // Event listener for ticket booking form submission
+        document.getElementById("booking-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const destination = document.getElementById("destination").value;
+            const travelDate = document.getElementById("travel-date").value;
+            const travelers = document.getElementById("travelers").value;
+
+            if (email && destination && travelDate && travelers) {
+                alert(`Travel ticket booked successfully!\n\nDetails:\nDestination: ${destination}\nTravel Date: ${travelDate}\nNumber of Travelers: ${travelers}`);
+
+                // Reset booking form
+                document.getElementById("booking-form").reset();
+            } else {
+                alert("Please fill all the booking details.");
+            }
+        });
+    </script>
+</body>
+</html>
